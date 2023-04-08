@@ -1,0 +1,54 @@
+name: Домашняя работа CI-CD
+
+on:
+  push:
+    branches: [master]
+
+
+jobs:
+  tests:
+    runs-on: Ubuntu-20.04
+    env:
+      ALLOWED_HOSTS: ${{secrets.ALLOWED_HOSTS}}
+      DB_ENGINE: ${{secrets.DB_ENGINE}}
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_NAME: ${{secrets.DB_NAME}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+      DB_PORT: ${{secrets.DB_PORT}}
+      DB_USER: ${{secrets.DB_USER}}
+    services:
+      postgres_main:
+        image: postgres:12
+        env:
+          POSTGRES_DB: ${{env.DB_NAME}}
+          POSTGRES_USER: ${{env.DB_USER}}
+          POSTGRES_PASSWORD: ${{env.DB_PASSWORD}}
+        ports:
+          - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Check new changes
+        uses: actions/checkout@v2
+
+      - name: Install python and settings environments
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+
+      - name: install requirements
+        run: pip install -r requirements.txt
+
+      - name: Testing
+        run: pytest
+        env:
+          ALLOWED_HOSTS: ${{env.ALLOWED_HOSTS}}
+          DB_ENGINE: ${{env.DB_ENGINE}}
+          DB_HOST: ${{env.DB_HOST}}
+          DB_NAME: ${{env.DB_NAME}}
+          DB_PASSWORD: ${{env.DB_PASSWORD}}
+          DB_PORT: ${{env.DB_PORT}}
+          DB_USER: ${{env.DB_USER}}
