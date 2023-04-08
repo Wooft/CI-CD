@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+    networks:
+      - backend
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=wooft
+      - POSTGRES_PASSWORD=Shambala
+      - POSTGRES_DB=netology_stocks_products
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U wooft -d netology_stocks_products" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+    volumes:
+      - ./static:/static
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
