@@ -1,7 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from logistic.models import Product, Stock
@@ -16,6 +18,11 @@ class ProductViewSet(ModelViewSet):
     filterset_fields = ['title', 'description'] #Атрибуты по которым происходит фильтрация
     search_fields = ['title', 'description']#Атрибуты для фильтра, который осуществляет поиск по тексту
     pagination_class = LimitOffsetPagination
+
+    @action(['GET'], detail=False)
+    def test(self, request):
+        return Response('Hello World')
+
 
 
 class StockViewSet(ModelViewSet):
