@@ -5,7 +5,7 @@ services:
     build: .
     command: gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
     expose:
-      - 8000
+      - 6060
     networks:
       - backend
     depends_on:
@@ -16,7 +16,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=wooft
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Shambala
       - POSTGRES_DB=netology_stocks_products
     networks:
@@ -31,7 +31,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 1337:80
+      - 8000:6060
     depends_on:
       - web
     volumes:
