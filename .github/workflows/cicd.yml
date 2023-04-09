@@ -60,4 +60,3 @@ jobs:
           username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
           script: expect /home/wooft/pull.exp
-

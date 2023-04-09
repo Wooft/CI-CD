@@ -23,6 +23,10 @@ class ProductViewSet(ModelViewSet):
     def test(self, request):
         return Response('Hello World')
 
+    @action(['GET'], detail=False)
+    def test2(self, request):
+        return Response('Тест прошел успешно')
+
 
 
 class StockViewSet(ModelViewSet):

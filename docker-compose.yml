@@ -16,7 +16,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=wooft
       - POSTGRES_PASSWORD=Shambala
       - POSTGRES_DB=netology_stocks_products
     networks:
