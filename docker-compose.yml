@@ -5,9 +5,7 @@ services:
     build: .
     command: gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
     expose:
-      - 8000
-    ports:
-      - "8000:8000"
+      - 6060
     networks:
       - backend
     depends_on:
@@ -32,8 +30,10 @@ services:
 
   nginx:
     build: ./nginx
+    expose:
+      - 6060
     ports:
-      - 1337:80
+      - 80:6060
     depends_on:
       - web
     volumes:
