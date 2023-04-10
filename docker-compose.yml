@@ -3,13 +3,13 @@ version: '3.9'
 services:
   web:
     build: .
-    command: gunicorn stocks_products.wsgi:application --bind 0.0.0.0:8000
     expose:
-      - 6060
+      - 8000
     networks:
       - backend
     depends_on:
       - db
+    entrypoint: ./entrypoint.sh
 
   db:
     image: postgres:13.0-alpine
@@ -30,10 +30,8 @@ services:
 
   nginx:
     build: ./nginx
-    expose:
-      - 6060
     ports:
-      - 80:6060
+      - 80:80
     depends_on:
       - web
     volumes:
