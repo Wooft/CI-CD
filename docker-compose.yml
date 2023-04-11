@@ -1,5 +1,8 @@
 version: '3.9'
 
+volumes:
+  postgres_data:
+
 services:
   web:
     build: .
@@ -39,9 +42,6 @@ services:
       - ./static:/static
     networks:
       - backend
-
-volumes:
-  postgres_data:
 
 networks:
   backend:
