@@ -31,6 +31,9 @@ class ProductViewSet(ModelViewSet):
     def test3(self, request):
         return Response('Привет, Олечка')
 
+    @action(['GET'], detail=False)
+    def test4(self, request):
+        return Response('Проверка докера')
 
 
 class StockViewSet(ModelViewSet):
