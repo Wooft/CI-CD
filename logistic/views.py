@@ -21,7 +21,7 @@ class ProductViewSet(ModelViewSet):
 
     @action(['GET'], detail=False)
     def test(self, request):
-        return Response('Deploy вечен')
+        return Response('Deploy вечен, чтоб меня')
 
     @action(['GET'], detail=False)
     def test2(self, request):
