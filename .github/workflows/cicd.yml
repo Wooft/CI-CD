@@ -2,7 +2,7 @@ name: Домашняя работа CI-CD
 
 on:
   push:
-    branches: [master]
+    branches: [docker]
 
 
 jobs:
@@ -59,4 +59,4 @@ jobs:
           host: ${{secrets.HOST}}
           username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
-          script: expect /home/wooft/pull.exp
+          script: bash /home/wooft/pulldocker.sh
